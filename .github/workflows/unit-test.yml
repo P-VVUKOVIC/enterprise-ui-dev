@@ -18,4 +18,4 @@ jobs:
     - name: Npm Install
       run: npm ci
     - name: Build and Test
-      run: npm build && npm test
+      run: npm run build && npm test
