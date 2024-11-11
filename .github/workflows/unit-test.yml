@@ -11,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Setup Node
       uses: actions/setup-node@v4
-    - run: npm ci
-    - run: npm test
+    - name: Npm Install
+      run: npm ci
+    - name: Build and Test
+      run: npm build && npm test
