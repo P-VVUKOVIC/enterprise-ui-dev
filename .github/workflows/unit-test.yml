@@ -2,9 +2,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   unit-test:
@@ -31,5 +31,9 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run build
-
-      
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repoisitory
+        uses: actions/checkout@v4
+      - run: npm run format:check
