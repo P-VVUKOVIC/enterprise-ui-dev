@@ -1,0 +1,63 @@
+name: Unit Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repoisitory
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repoisitory
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+  check-formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repoisitory
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Install modules from npm
+        run: npm ci
+      - name: Check formatting with Prettier
+        run: npm run format:check
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test -- --coverage --run
+      - uses: actions/upload-artifact@v3
+        name: Archive coverage report
+        with:
+          name: coverage-report
+          path: coverage
